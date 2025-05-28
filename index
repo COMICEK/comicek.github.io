@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adrian - Social Media Designer & Illustrator</title> <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        /* Forcing Light Theme - No dark mode specific styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #3B82F6; /* Main blue background */
+            color: #1F2937; /* Default dark text color */
+            overflow-x: hidden !important;
+        }
+        html {
+            overflow-x: hidden !important;
+            scroll-behavior: smooth;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
+        }
+        .section-title {
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: #EC4899; /* Pink accent */
+            margin: 0.5rem auto 0;
+            border-radius: 2px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08), 0 6px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12), 0 10px 10px rgba(0,0,0,0.08);
+        }
+        .card img.zoomable {
+            transition: transform 0.4s ease;
+        }
+        .card:hover img.zoomable {
+            transform: scale(1.05);
+        }
+        .img-gallery a { /* Style for clickable gallery items */
+            display: block; /* Ensure the link takes up the whole space */
+            border-radius: 0.75rem; /* Match image border-radius */
+            overflow: hidden; /* Keep image corners rounded */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .img-gallery a:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        .img-gallery img {
+            /* border-radius: 0.75rem; */ /* Moved to 'a' tag if clickable */
+            /* box-shadow: 0 4px 8px rgba(0,0,0,0.1); */ /* Moved to 'a' tag if clickable */
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            display: block; /* Remove any extra space below image */
+        }
+        .contact-section {
+            background-color: #1E3A8A; /* Dark blue for contact */
+        }
+        .wavy-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+        .wavy-bg svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 120px;
+        }
+        .wavy-bg .shape-fill {
+            fill: #DBEAFE; /* Wave color */
+        }
+        .section-bg-light { background-color: #EFF6FF; }
+        .section-bg-pinkish { background-color: #FFF0F5; }
+        .section-bg-yellowish { background-color: #FEF3C7; }
+        .section-bg-blueish-white { background-color: #F0F8FF; }
+        .section-bg-minty { background-color: #F0FFF0; }
+
+        .tool-category-title, .experience-category-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563EB;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #DBEAFE;
+        }
+        .tool-item, .experience-item {
+            display: flex;
+            align-items: flex-start;
+            background-color: #F9FAFB;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .tool-item i, .experience-item i {
+            color: #EC4899;
+            font-size: 1.25rem;
+            margin-right: 0.75rem;
+            width: 30px;
+            text-align: center;
+            margin-top: 0.125rem;
+        }
+        .tool-item span, .experience-item div {
+            font-weight: 600;
+            color: #374151;
+            flex: 1;
+        }
+        .experience-item .title { font-weight: 700; display: block; }
+        .experience-item .meta { font-size: 0.875rem; color: #6B7280; display: block; }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+            text-align: center;
+        }
+        .btn-primary { background-color: #EC4899; color: white; }
+        .btn-primary:hover { background-color: #DB2777; transform: translateY(-2px); }
+        .btn-secondary { background-color: #F59E0B; color: #1E3A8A; }
+        .btn-secondary:hover { background-color: #D97706; transform: translateY(-2px); }
+        .btn-hero {
+            background-color: #F59E0B; color: #1E3A8A;
+            padding: 0.875rem 2rem; font-size: 1.125rem; margin-top: 1.5rem;
+        }
+        .btn-hero:hover { background-color: #D97706; transform: translateY(-3px) scale(1.05); }
+
+        .hero-grid-pattern {
+            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        /* Aspect ratio placeholders */
+        .aspect-4-3 { width: 100%; padding-bottom: 75%; position: relative; } /* Landscape 4:3 */
+        .aspect-1-1 { width: 100%; padding-bottom: 100%; position: relative; }   /* Square 1:1 */
+        .aspect-9-16 { width: 100%; padding-bottom: 177.77%; position: relative; } /* Portrait 9:16 */
+        .aspect-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+        .about-me-img { /* For drop shadow on PNG */
+            filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.04)) drop-shadow(0 4px 3px rgba(0, 0, 0, 0.1));
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <section class="hero-section min-h-screen flex flex-col items-center justify-center text-white p-6 relative overflow-hidden hero-grid-pattern">
+        <div class="relative z-10 text-center">
+            <img src="assets/profile_1.webp" alt="Adrian's Profile Picture" class="w-40 h-40 md:w-48 md:h-48 mx-auto rounded-full mb-8 border-4 border-white shadow-xl object-cover" data-aos="zoom-in" data-aos-duration="700" onerror="this.onerror=null;this.src='https://placehold.co/160x160/E0E7FF/3B82F6?text=A&font=Poppins';">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-3 tracking-tight" data-aos="fade-up" data-aos-delay="150" data-aos-duration="700">I'm Adrian</h1>
+            <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-pink-300" data-aos="fade-up" data-aos-delay="300" data-aos-duration="700">Social Media Designer & Illustrator</p>
+            <a href="#contact" class="btn btn-hero" data-aos="fade-up" data-aos-delay="450" data-aos-duration="700">
+                <i class="fas fa-paper-plane mr-2"></i>Hire Me
+            </a>
+        </div>
+        <div class="wavy-bg">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31.74,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <section id="visual-curation" class="py-16 md:py-24 px-6 section-bg-light">
+        <div class="container mx-auto max-w-6xl">
+            <h2 class="section-title text-4xl md:text-5xl text-pink-500" data-aos="fade-down">Visual Curation</h2>
+            <div class="mb-16">
+                <h3 class="text-2xl md:text-3xl font-bold text-blue-600 mb-6 text-center" data-aos="fade-right" data-aos-delay="100">Vibe Setting</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+                    <div class="card" data-aos="fade-up" data-aos-delay="200">
+                        <img src="assets/vibe_1.webp" alt="Vibe Setting Example 1" class="w-full h-auto object-cover rounded-t-lg zoomable" onerror="this.onerror=null;this.src='https://placehold.co/400x500/FBCFE8/EC4899?text=Vibe+1';">
+                        <div class="p-4 text-center">
+                            <p class="text-gray-600">Calming and aesthetic visual concepts.</p>
+                        </div>
+                    </div>
+                    <div class="card" data-aos="fade-up" data-aos-delay="300">
+                        <img src="assets/vibe_2.webp" alt="Vibe Setting Example 2" class="w-full h-auto object-cover rounded-t-lg zoomable" onerror="this.onerror=null;this.src='https://placehold.co/400x500/F59E0B/9A3412?text=Vibe+2';">
+                         <div class="p-4 text-center">
+                            <p class="text-gray-600">Warm color palettes for positive energy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery-1" class="py-16 md:py-24 px-6 section-bg-pinkish">
+        <div class="container mx-auto max-w-6xl">
+            <h3 class="text-3xl md:text-4xl font-bold text-pink-600 mb-10 text-center" data-aos="fade-left" data-aos-delay="100">YouTube Vibes</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 img-gallery">
+                <a href="https://bit.ly/4keKoW0" target="_blank" class="aspect-4-3" data-aos="zoom-in-up" data-aos-delay="200"><img src="assets/youtube_1.webp" alt="YouTube Thumbnail 1" class="aspect-content" onerror="this.onerror=null;this.src='https://placehold.co/400x300/A5B4FC/1E3A8A?text=YT+1';"></a>
+                <a href="https://bit.ly/44BkE1z" target="_blank" class="aspect-4-3" data-aos="zoom-in-up" data-aos-delay="250"><img src="assets/youtube_2.webp" alt="YouTube Thumbnail 2" class="aspect-content" onerror="this.onerror=null;this.src='https://placehold.co/400x300/FBCFE8/EC4899?text=YT+2';"></a>
+                <a href="https://bit.ly/3YAWaS9" target="_blank" class="aspect-4-3" data-aos="zoom-in-up" data-aos-delay="300"><img src="assets/youtube_3.webp" alt="YouTube Thumbnail 3" class="aspect-content" onerror="this.onerror=null;this.src='https://placehold.co/400x300/FDE047/713F12?text=YT+3';"></a>
+                <a href="https://bit.ly/44pMAVY" target="_blank" class="aspect-4-3" data-aos="zoom-in-up" data-aos-delay="350"><img src="assets/youtube_4.webp" alt="YouTube Thumbnail 4" class="aspect-content" onerror="this.onerror=null;this.src='https://placehold.co/400x300/A78BFA/5B21B6?text=YT+4';"></a>
+                <a href="https://bit.ly/4m4oQx7" target="_blank" class="aspect-4-3" data-aos="zoom-in-up" data-aos-delay="400"><img src="assets/youtube_5.webp" alt="YouTube Thumbnail 5" class="aspect-content" onerror="this.onerror=null;this.src='https://placehold.co/400x300/F472B6/831843?text=YT+5';"></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery-2" class="py-16 md:py-24 px-6 section-bg-light">
+        <div class="container mx-auto max-w-7xl">
+            <h3 class="text-3xl md:text-4xl font-bold text-blue-600 mb-10 text-center" data-aos="fade-right" data-aos-delay="100">Vector Showcase</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 img-gallery">
+                <script>
+                    for (let i = 1; i <= 8; i++) {
+                        const delay = 100 + i * 50;
+                        const placeholderColor = ['E0E7FF/3B82F6', 'FBCFE8/EC4899', 'FDE047/713F12', 'A78BFA/5B21B6', 'F472B6/831843', '6EE7B7/047857', 'A5B4FC/1E3A8A', 'FCA5A5/7F1D1D'];
+                        document.write(`
+                            <div class="aspect-1-1" data-aos="zoom-in-up" data-aos-delay="${delay}">
+                                <img src="assets/vector_${i}.webp" alt="Vector Artwork ${i}" class="aspect-content" onerror="this.onerror=null;this.src='https://placehold.co/300x300/${placeholderColor[i-1]}?text=Vector+${i}';">
+                            </div>
+                        `);
+                    }
+                </script>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery-3" class="py-16 md:py-24 px-6 section-bg-pinkish">
+        <div class="container mx-auto max-w-6xl">
+            <h3 class="text-3xl md:text-4xl font-bold text-pink-600 mb-10 text-center" data-aos="fade-left" data-aos-delay="100">Webtoon Best Scenes</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 img-gallery">
+                <div class="aspect-9-16" data-aos="zoom-in-up" data-aos-delay="200"><img src="assets/webtoon_1.webp" alt="Webtoon Scene 1" class="aspect-content" onerror="this.onerror=null;this.src='https://placehold.co/270x480/A5B4FC/1E3A8A?text=Webtoon+1';"></div>
+                <div class="aspect-9-16" data-aos="zoom-in-up" data-aos-delay="250"><img src="assets/webtoon_2.webp" alt="Webtoon Scene 2" class="aspect-content" onerror="this.onerror=null;this.src='https://placehold.co/270x480/FBCFE8/EC4899?text=Webtoon+2';"></div>
+                <div class="aspect-9-16" data-aos="zoom-in-up" data-aos-delay="300"><img src="assets/webtoon_3.webp" alt="Webtoon Scene 3" class="aspect-content" onerror="this.onerror=null;this.src='https://placehold.co/270x480/FDE047/713F12?text=Webtoon+3';"></div>
+                <div class="aspect-9-16" data-aos="zoom-in-up" data-aos-delay="350"><img src="assets/webtoon_4.webp" alt="Webtoon Scene 4" class="aspect-content" onerror="this.onerror=null;this.src='https://placehold.co/270x480/A78BFA/5B21B6?text=Webtoon+4';"></div>
+                <div class="aspect-9-16" data-aos="zoom-in-up" data-aos-delay="400"><img src="assets/webtoon_5.webp" alt="Webtoon Scene 5" class="aspect-content" onerror="this.onerror=null;this.src='https://placehold.co/270x480/F472B6/831843?text=Webtoon+5';"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about-me" class="py-16 md:py-24 px-6 section-bg-blueish-white">
+        <div class="container mx-auto max-w-5xl">
+            <h2 class="section-title text-4xl md:text-5xl text-blue-600" data-aos="fade-down">About Me</h2>
+            <style> #about-me .section-title::after { background-color: #2563EB; } </style>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right" data-aos-delay="200">
+                    <img src="assets/profile_2.png" alt="Adrian working on designs" class="rounded-lg w-full h-auto object-cover about-me-img">
+                </div>
+                <div data-aos="fade-left" data-aos-delay="300">
+                    <h3 class="text-2xl md:text-3xl font-bold text-pink-500 mb-4">Who is Adriansyah?</h3>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        I love telling stories without saying a word.
+                    </p>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        For me, visual storytelling isn’t just about cool art—it’s about making you feel something without needing to explain it.
+                    </p>
+                    <p class="text-gray-700 leading-relaxed">
+                        If the story lands, the vibe hits, and it sticks with you? That’s the goal. That’s the craft.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tools" class="py-16 md:py-24 px-6 section-bg-yellowish">
+        <div class="container mx-auto max-w-5xl">
+            <h2 class="section-title text-4xl md:text-5xl text-yellow-600" data-aos="fade-down">Tools I Use</h2>
+            <style> #tools .section-title::after { background-color: #D97706; } </style>
+            <div class="grid md:grid-cols-2 gap-x-12 gap-y-8">
+                <div data-aos="fade-right" data-aos-delay="200">
+                    <h4 class="tool-category-title">Visual Tools</h4>
+                    <div class="tool-item"><i class="fas fa-palette"></i><span>Canva</span></div>
+                    <div class="tool-item"><i class="fas fa-vector-square"></i><span>Adobe Illustrator</span></div>
+                    <div class="tool-item"><i class="fas fa-image"></i><span>Adobe Photoshop</span></div>
+                    <div class="tool-item"><i class="fas fa-paint-brush"></i><span>Clip Studio Paint (CSP)</span></div>
+                </div>
+                <div data-aos="fade-left" data-aos-delay="300">
+                    <h4 class="tool-category-title">Video Tools</h4>
+                    <div class="tool-item"><i class="fas fa-film"></i><span>Capcut</span></div>
+                </div>
+                <div data-aos="fade-right" data-aos-delay="400">
+                    <h4 class="tool-category-title">Social Media Management</h4>
+                    <div class="tool-item"><i class="fab fa-facebook-square"></i><span>Meta Business Suite</span></div>
+                </div>
+                <div data-aos="fade-left" data-aos-delay="500">
+                    <h4 class="tool-category-title">Content Planning</h4>
+                    <div class="tool-item"><i class="fas fa-file-excel"></i><span>Google Sheets</span></div>
+                    <div class="tool-item"><i class="fas fa-file-powerpoint"></i><span>Google Slides</span></div>
+                </div>
+                <div class="md:col-span-2" data-aos="fade-up" data-aos-delay="600">
+                    <h4 class="tool-category-title text-center">Project Management</h4>
+                    <div class="tool-item max-w-sm mx-auto"><i class="fab fa-trello"></i><span>Trello</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="py-16 md:py-24 px-6 section-bg-minty">
+        <div class="container mx-auto max-w-5xl">
+            <h2 class="section-title text-4xl md:text-5xl text-green-600" data-aos="fade-down">My Experience</h2>
+            <style> #experience .section-title::after { background-color: #15803D; } </style>
+            <div class="grid md:grid-cols-2 gap-x-12 gap-y-10">
+                <div data-aos="fade-right" data-aos-delay="200">
+                    <h4 class="experience-category-title">Education</h4>
+                    <div class="experience-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <div>
+                            <span class="title">SMP NEGERI 110</span>
+                            <span class="meta">General, 2015 - 2018</span>
+                        </div>
+                    </div>
+                    <div class="experience-item">
+                        <i class="fas fa-user-graduate"></i>
+                        <div>
+                            <span class="title">SMA NEGERI 63</span>
+                            <span class="meta">Science, 2018 - 2021</span>
+                        </div>
+                    </div>
+                </div>
+                <div data-aos="fade-left" data-aos-delay="300">
+                    <h4 class="experience-category-title">Creative Experience</h4>
+                    <div class="experience-item">
+                        <i class="fas fa-camera-retro"></i>
+                        <div>
+                            <span class="title">Team Leader Photography</span>
+                            <span class="meta">Extracurricular, 2018 - 2021</span>
+                        </div>
+                    </div>
+                    <div class="experience-item">
+                        <i class="fas fa-video"></i>
+                        <div>
+                            <span class="title">Content Creator</span>
+                            <span class="meta">Ubeatz Entertainment, 2024 - 2025</span>
+                        </div>
+                    </div>
+                    <div class="experience-item">
+                        <i class="fas fa-pencil-alt"></i>
+                        <div>
+                            <span class="title">Comic Artist</span>
+                            <span class="meta">Comicek, 2023 - 2024</span>
+                        </div>
+                    </div>
+                    <div class="experience-item">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>
+                            <span class="title">Team Design Thinking</span>
+                            <span class="meta">Markoding, 2019</span>
+                        </div>
+                    </div>
+                    <div class="experience-item">
+                        <i class="fas fa-film"></i>
+                        <div>
+                            <span class="title">Short Movie Editor</span>
+                            <span class="meta">FLS2N, 2019</span>
+                        </div>
+                    </div>
+                    <div class="experience-item">
+                        <i class="fas fa-palette"></i>
+                        <div>
+                            <span class="title">Comic Strip Artist</span>
+                            <span class="meta">FLS2N, 2020</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-16 md:py-24 px-6" style="background-color: #E0E7FF;">
+        <div class="container mx-auto max-w-5xl">
+            <h2 class="section-title text-4xl md:text-5xl text-blue-600" data-aos="fade-down">My Services</h2>
+            <style> #services .section-title::after { background-color: #2563EB; } </style>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card text-center p-6 md:p-8" data-aos="zoom-in-down" data-aos-delay="200">
+                    <i class="fas fa-paint-brush text-blue-500 text-3xl mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2 text-blue-700">Social Media Graphics</h3>
+                    <p class="text-gray-600 text-sm">Stunning visuals that hit different for all your socials.</p>
+                </div>
+                <div class="card text-center p-6 md:p-8" data-aos="zoom-in-down" data-aos-delay="300">
+                    <i class="fas fa-pencil-ruler text-blue-500 text-3xl mb-4"></i> <h3 class="text-xl font-bold mb-2 text-blue-700">Comic Art & Illustration</h3>
+                    <p class="text-gray-600 text-sm">Illustrations and comics that serve looks on every platform.</p>
+                </div>
+                <div class="card text-center p-6 md:p-8" data-aos="zoom-in-down" data-aos-delay="400">
+                    <i class="fas fa-comments text-blue-500 text-3xl mb-4"></i> <h3 class="text-xl font-bold mb-2 text-blue-700">Visual Storytelling</h3>
+                    <p class="text-gray-600 text-sm">Visual stories that give all the feels across every platform.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="contact-section text-white py-16 md:py-20 px-6">
+        <div class="container mx-auto max-w-3xl text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8" data-aos="fade-down">Interested in Collaborating?</h2>
+            <p class="mb-8 text-lg text-blue-200" data-aos="fade-up" data-aos-delay="200">I'm ready to help bring your visual ideas to life. Feel free to reach out!</p>
+            <div class="flex flex-col sm:flex-row flex-wrap justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-10">
+                <a href="mailto:adrianz2z.comi@gmail.com" class="btn btn-primary w-full sm:w-auto mb-3 sm:mb-0" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-envelope mr-2"></i> Email Me
+                </a>
+                <a href="https://instagram.com/comicek.art" target="_blank" class="btn btn-secondary w-full sm:w-auto mb-3 sm:mb-0" data-aos="fade-up" data-aos-delay="400" style="background-color: #C13584; color: white;"> <i class="fab fa-instagram mr-2"></i> Instagram
+                </a>
+                <a href="https://www.linkedin.com/in/adrian-syah-906b0a217?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="btn w-full sm:w-auto mb-3 sm:mb-0" data-aos="fade-up" data-aos-delay="500" style="background-color: #0A66C2; color: white;"> <i class="fab fa-linkedin mr-2"></i> LinkedIn
+                </a>
+                 <a href="https://discordapp.com/users/adrianz2z" target="_blank" class="btn w-full sm:w-auto" data-aos="fade-up" data-aos-delay="600" style="background-color: #5865F2; color: white;"> <i class="fab fa-discord mr-2"></i> Discord: adrianz2z
+                </a>
+            </div>
+            <p class="text-sm text-blue-300 mt-8" data-aos="fade-up" data-aos-delay="700">&copy; <span id="currentYear"></span> Adrian. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 700,
+            once: false, 
+            offset: 80, 
+            easing: 'ease-out-quad',
+        });
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+
+</body>
+</html>
